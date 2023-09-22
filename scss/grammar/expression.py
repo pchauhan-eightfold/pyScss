@@ -86,7 +86,7 @@ class SassExpressionScanner(Scanner):
         ('VAR', '\\$[-a-zA-Z0-9_]+'),
         ('LITERAL_FUNCTION', '(-moz-calc|-webkit-calc|calc|expression|progid:[\\w.]+)(?=[(])'),
         ('ALPHA_FUNCTION', 'alpha(?=[(])'),
-        ('OPACITY', 'opacity'),
+        ('OPACITY', '(?i:opacity)'),
         ('URL_FUNCTION', 'url(?=[(])'),
         ('IF_FUNCTION', 'if(?=[(])'),
         ('FNCT', '[-a-zA-Z_][-a-zA-Z0-9_]*(?=\\()'),
@@ -101,10 +101,7 @@ class SassExpressionScanner(Scanner):
         elif self.patterns is None:
             self.__class__.patterns = []
             for t, p in self._patterns:
-                if t == 'OPACITY':
-                    self.patterns.append((t, re.compile(p, re.IGNORECASE)))
-                else:
-                    self.patterns.append((t, re.compile(p)))
+                self.patterns.append((t, re.compile(p)))
         super(SassExpressionScanner, self).__init__(None, ['[ \r\t\n]+'], input)
 
 
